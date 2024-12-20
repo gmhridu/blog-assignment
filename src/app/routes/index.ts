@@ -10,7 +10,7 @@ const router = Router();
 
 const routes: TRoutes[] = [
   {
-    path: '/users',
+    path: '/auth',
     route: UserRouter,
   },
 ];
