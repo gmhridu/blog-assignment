@@ -13,10 +13,14 @@ router.post(
   UserControllers.createUser,
 );
 
+router.post('/create-admin', UserControllers.createAdmin);
+
 router.post(
   '/login',
   validateRequest(AuthValidation.loginValidationSchema),
   AuthControllers.loginUser,
 );
+
+router.get('/users', UserControllers.getAllUsers);
 
 export const UserRouter = router;
