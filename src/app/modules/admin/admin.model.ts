@@ -22,6 +22,10 @@ const adminSchema = new Schema<TAdmin, AdminModel>(
       type: String,
       required: true,
     },
+    isBlocked: {
+      type: Boolean,
+      default: false,
+    },
     isDeleted: {
       type: Boolean,
       default: true,

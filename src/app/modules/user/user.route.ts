@@ -21,6 +21,5 @@ router.post(
   AuthControllers.loginUser,
 );
 
-router.get('/users', UserControllers.getAllUsers);
 
 export const UserRouter = router;

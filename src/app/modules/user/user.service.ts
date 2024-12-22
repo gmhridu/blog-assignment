@@ -51,14 +51,8 @@ const createAdminIntoDB = async (payload: TAdmin) => {
   }
 };
 
-const getAllUsersFromDB = async() => {
-  const result = await User.find();
-
-  return result;
-}
 
 export const UserServices = {
   createUserIntoDB,
   createAdminIntoDB,
-  getAllUsersFromDB,
 };
