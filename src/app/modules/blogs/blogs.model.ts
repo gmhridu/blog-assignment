@@ -59,13 +59,13 @@ blogSchema.pre('save', async function (next) {
   }
 });
 
-blogSchema.pre(/^find/, async function (next) {
+blogSchema.pre('find', async function (next) {
   try {
     const invalidUsers = await User.find({
       $or: [{ isBlocked: true }, { isDeleted: true }],
     });
 
-    Blog.where({
+    this.where({
       author: { $nin: invalidUsers.map((user) => user._id) },
     });
 
@@ -74,5 +74,7 @@ blogSchema.pre(/^find/, async function (next) {
     next(error);
   }
 });
+
+
 
 export const Blog = model<TBlog>('Blog', blogSchema);

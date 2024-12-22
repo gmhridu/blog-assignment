@@ -35,10 +35,38 @@ const getBlogsByAuthorId = catchAsync(async (req, res) => {
     message: 'Blogs by author retrieved successfully',
     data: result,
   });
+});
+
+const updateBlog = catchAsync(async (req, res) => {
+  const { id } = req.params;
+
+  const result = await BlogServices.updateBlogIntoDB(id, req.body);
+
+  sendResponse(res, {
+    status: 200,
+    success: true,
+    message: 'Blog updated successfully',
+    data: result,
+  });
+})
+
+const deleteBlog = catchAsync(async (req, res) => {
+  const { id } = req.params;
+
+  const result = await BlogServices.deleteBlogFromDB(id);
+
+  sendResponse(res, {
+    status: 200,
+    success: true,
+    message: 'Blog deleted successfully',
+    data: result,
+  });
 })
 
 export const BlogControllers = {
   createBlog,
   getAllBlogs,
   getBlogsByAuthorId,
+  updateBlog,
+  deleteBlog,
 };

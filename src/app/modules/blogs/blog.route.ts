@@ -13,6 +13,10 @@ router.post(
 
 router.get('/:authorId', BlogControllers.getBlogsByAuthorId);
 
+router.put('/:id', BlogControllers.updateBlog);
+
+router.delete('/:id', BlogControllers.deleteBlog);
+
 router.get('/', BlogControllers.getAllBlogs);
 
 export const BlogRoutes = router;
