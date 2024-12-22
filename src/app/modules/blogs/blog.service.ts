@@ -22,7 +22,17 @@ const getAllBlogsFromDB = async (query: Record<string, unknown>) => {
   return result;
 };
 
+// retrieved users posted blogs using authorId
+const getBlogsByAuthorId = async (authorId: string) => {
+
+  const result = await Blog.find({ author: authorId }).populate('author');
+
+  return result;
+};
+
+
 export const BlogServices = {
   createBlogIntoDB,
   getAllBlogsFromDB,
+  getBlogsByAuthorId,
 };

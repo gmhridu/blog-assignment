@@ -9,4 +9,6 @@ router.patch('/users/:userId/block', AdminControllers.blockedAUser);
 
 router.delete('/users/:userId/delete', AdminControllers.deleteUser);
 
+router.delete('/blogs/:id', AdminControllers.deleteABlog);
+
 export const AdminRoutes = router;

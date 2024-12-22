@@ -1,3 +1,4 @@
+import { Blog } from '../blogs/blogs.model';
 import { User } from '../user/user.model';
 
 const getAllUsersFromDB = async () => {
@@ -44,8 +45,19 @@ const deleteAUserIntoDB = async (id: string) => {
   return result;
 };
 
+const deleteABlogFromDB = async(id: string) => {
+  const result = await Blog.findByIdAndDelete(id);
+
+  if (!result) {
+    throw new Error('Failed to delete Blog!');
+  }
+
+  return result;
+}
+
 export const AdminServices = {
   blockedAUserIntoDB,
   getAllUsersFromDB,
   deleteAUserIntoDB,
+  deleteABlogFromDB,
 };

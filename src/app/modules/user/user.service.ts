@@ -5,52 +5,41 @@ import { User } from './user.model';
 import { Admin } from '../admin/admin.model';
 
 const createUserIntoDB = async (payload: IUser) => {
-  const result = await User.create(payload);
-
-  return result;
+  return await User.create(payload);
 };
 
 const createAdminIntoDB = async (payload: TAdmin) => {
-  const userData: Partial<IUser> = {};
-
-  // set role as a admin
-  userData.role = 'admin';
-  userData.name = payload.name;
-  userData.email = payload.email;
-  userData.password = payload.password;
-
   const session = await startSession();
+  session.startTransaction();
 
   try {
-    session.startTransaction();
-    // create user
+    // Step 1: Create user with admin role
+    const userData: Partial<IUser> = {
+      name: payload.name,
+      email: payload.email,
+      password: payload.password,
+      role: 'admin',
+    };
     const newUser = await User.create([userData], { session });
+    if (!newUser.length) throw new Error('Failed to create admin user');
 
-    if (!newUser.length) {
-      throw new Error('Failed to create admin');
-    }
-
-    // set _id as user
+    // Step 2: Create admin profile and link to the user
     payload.user = newUser[0]._id;
-
-    // create a admin
     const newAdmin = await Admin.create([payload], { session });
+    if (!newAdmin.length) throw new Error('Failed to create admin profile');
 
-    if (!newAdmin.length) {
-      throw new Error('Failed to create admin');
-    }
-
+    // Commit transaction
     await session.commitTransaction();
-    await session.endSession();
+    session.endSession();
 
-    return newAdmin;
+    return newAdmin[0];
   } catch (error) {
+    // Rollback transaction
     await session.abortTransaction();
-    await session.endSession();
-    throw new Error(error as string);
+    session.endSession();
+    throw error;
   }
 };
-
 
 export const UserServices = {
   createUserIntoDB,

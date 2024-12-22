@@ -3,7 +3,7 @@ import sendResponse from '../../utils/sendResponse';
 import { UserServices } from './user.service';
 
 const createUser = catchAsync(async (req, res) => {
-  const result = await UserServices.createAdminIntoDB(req.body);
+  const result = await UserServices.createUserIntoDB(req.body);
 
   sendResponse(res, {
     status: 201,
