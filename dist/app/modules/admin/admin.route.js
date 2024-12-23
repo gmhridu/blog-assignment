@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AdminRoutes = void 0;
+const express_1 = require("express");
+const admin_controller_1 = require("./admin.controller");
+const router = (0, express_1.Router)();
+router.get('/users', admin_controller_1.AdminControllers.getAllUsers);
+router.patch('/users/:userId/block', admin_controller_1.AdminControllers.blockedAUser);
+router.delete('/users/:userId/delete', admin_controller_1.AdminControllers.deleteUser);
+router.delete('/blogs/:id', admin_controller_1.AdminControllers.deleteABlog);
+exports.AdminRoutes = router;
